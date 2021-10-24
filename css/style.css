@@ -10,9 +10,10 @@
     --fw-reg: 300;
     --fw-bold: 900;
     
-    --clr-light: #fff;
-    --clr-dark: #303030;
-    --clr-accent: #16e0bd;
+    --clr-light: #181a1a;
+    --clr-dark: #7510f7;
+    /* --clr-dark: #7510f7; */
+    --clr-accent: #ffff;
     
     --fs-h1: 3rem;
     --fs-h2: 2.25rem;
@@ -181,7 +182,8 @@ header {
     background: transparent;
     border: 0;
     cursor: pointer;
-    position: absolute;
+    position: absolute; 
+    /* maybe change the position to fixed later */
     right: 1em;
     top: 1em;
     z-index: 1000;
@@ -206,8 +208,6 @@ header {
 .nav-open .hamburger::before {
     transform: rotate(90deg) translate(-6px);
 }
-
-
 
 .hamburger {
     display: block;
@@ -236,20 +236,23 @@ header {
 .hamburger::before { top: 6px; }
 .hamburger::after { bottom: 6px; }
 
-
-
 /* Intro section */
 
 .intro { 
     position: relative;
+    min-height: 100vh;
+    /* box-sizing: border-box; */
 }
 
 .intro__img { 
     box-shadow: var(--bs);
+    max-block-size: 27em;
+
 }
 
-@media (min-width: 600px) {
+@media (min-width: 1073px) {
     .intro {
+        color: var(--clr-accent);
         display: grid;
         width: min-content;
         margin: 0 auto;
@@ -262,30 +265,34 @@ header {
 
     .intro__img {
         grid-area: img;
-        min-width: 250px;
+        min-width: 450px;
+        min-height:65vh;
         position: relative;
         z-index: 2;
     }
 
     .section__subtitle--intro {
+        background-color: var(--clr-dark);
+        color: var(--clr-accent);
         align-self: start;
         grid-column: -1/1;
         grid-row: 2;
         text-align: right;
-        position: relative;
+        position: absolute;
         left: -1.5rem;  
         width: calc(100% + 1.5em);
     }
 }
 
-/*  My services section  */
+/*  What I do  */
 
 .my-services {
-    background-color: var(--clr-dark);
-    background-image: url(../img/arnold-francisca-f77Bh3inUpE-unsplash.jpg);
+    height: 100vh;
+    background-color: var(--clr-accent);
+    /* background-image: url(../img/arnold-francisca-f77Bh3inUpE-unsplash.jpg); */
     background-size: cover;
     color: var(--clr-light);
-    /* background-blend-mode: multiply; */
+    background-blend-mode: multiply;
     text-align: center;
 }
 
@@ -293,7 +300,10 @@ header {
     color: var(--clr-accent);
     position: relative;
 }
-
+.section--paragraph {
+    font-size: x-large;
+    color: var(--clr-accent);
+}
 .section__title--services::after { 
     content: '';
     display: block;
@@ -326,32 +336,55 @@ header {
     }
 }
 
+/* About Me */
 .about-me {
-    max-width: 1000px;
+    /* max-width: 1000px; */
     margin: 0 auto;
+    min-height: 100vh;
+    background-color: var(--clr-dark);
 }
 
-.about-me__img { 
+.about-me__img {
     box-shadow: var(--bs);
-    /* min-height: 400px; */
 }
 
-@media (min-width: 600px) {
+@media (max-width: 829px) {
+    .about-me__img { 
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 70%;
+        height: 40%;
+    }
+}
+
+@media (min-width: 830px) {
     .about-me {
         display: grid;
-        grid-template-columns: 1fr 200px;
+        grid-template-columns: 1fr 400px;
         grid-template-areas: 
             "title img"
             "subtitle img"
             "text img";
         grid-column-gap: 2em;
     }
+
+    .about-me__body {
+        color: var(--clr-accent);
+        grid-area: text;
+        grid-column: 1/1;
+        grid-row: 2/3;
+        padding-top: 5em;
+        font-size: var(--fs-h3);
+    }
     
     .section__title--about {
         grid-area: title;
+        color: var(--clr-accent);
     }
     
     .section__subtitle--about {
+        background-color: var(--clr-light);
         grid-column: 1 / -1;
         grid-row: 2;
         position: relative;
@@ -359,6 +392,7 @@ header {
         width: calc(100% + 2em); 
         padding-left: 1em;
         padding-right: calc(200px + 4em);
+        height: fit-content;
     }
     
     .about-me__img {
@@ -370,20 +404,30 @@ header {
 
 /* My Work */
 
-.my-work { 
-    background-color: var(--clr-dark);
+.section__title {
+    color: var(--clr-accent);
+}
+
+.my-work {
+    background-color: var(--clr-light);
+    min-height: 80vh;
     color: var(--clr-light);
-    text-align: center;
+    text-align: center;    
+    position: relative;
 }
 
-.portfolio { 
-    display: grid; 
+.portfolio {
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    column-gap: 50px;
+    row-gap: 50px;
+    margin-bottom: 250px;
 }
 
-.portfolio__item {
-    background: var(--clr-accent);
-    overflow: hidden;
+.section__subtitle--work {
+    border: 1px ;
+    background-color: #7510f7;
+    /* width: fit-content; */
 }
 
 .portfolio__img {
@@ -394,19 +438,26 @@ header {
 
 .portfolio__item:focus {
     position: relative;
-    z-index: 2; 
+    z-index: 2;
 }
 
-.portfolio__img:hover,
-.portfolio__item:focus .portfolio__img {
+.portfolio__img:hover{
     transform: scale(1.2);
-    opacity: .7;
+}
+
+.portfolio__decoration-img { 
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* footer */
 .footer {
     font-size: var(--fs-h3);
-    background: #111;
+    background: #7510f7;
     color: var(--clr-accent);
     text-align: center;
     padding: 2.5em 0;
@@ -452,16 +503,7 @@ header {
 }
 
 .portfolio-item-individual p {
-    max-width: 700px;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
-
-.portfolio-picture {
-    /* watch out with this one */
-    margin-left: auto;
-    margin-right: auto;
-    max-height: 600px;
-}
-
-
